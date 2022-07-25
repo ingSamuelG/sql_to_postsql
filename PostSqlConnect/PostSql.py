@@ -44,9 +44,6 @@ class PostSqlConnect:
             if non_unique == 0 and key_name != "PRIMARY" and not re.search('\\bindex',key_name):
                 unique_indexs[name] = "unique"
 
-            # if  non_unique == 1:
-            #     indexes.append(index_psql_stament.format(key_name,table,name))
-        
         for key, values in index_struct.items():
             if re.search(table,key):
                 indexes.append(index_psql_stament.format(key,table,values))
@@ -94,8 +91,6 @@ class PostSqlConnect:
             else:
                 default = ""
 
-            # if extra != "": extra = " auto_increment"
-
             if keys == 'PRI':  primary_key = name
 
             if unique_indexs.get(name): type = "{} {}".format(type,unique_indexs.get(name))
@@ -130,35 +125,6 @@ class PostSqlConnect:
                 self.cursor.execute(insert_stament)
             except Exception as e:
                 print(e)
-            # o = 0
-            # new_row = []
-            # for r in row:
-            #     if isinstance(r, str) and re.search('\x00',r):
-            #         new_row.append(r.replace("\x00", "\uFFFD"))
-            #     else:  
-            #         new_row.append(r)
-            #     o+=1
-
-            #     # print(new_row)
-            #     self.cursor.execute(insert_stament,new_row)
-
-        # for row in mysql_rows:
-        #     insert_stament = 'insert into {} values ({});'.format(table_name,self.columns_string)
-    
-        #     try:
-        #         self.cursor.execute(insert_stament,row)
-        #     except ValueError:
-        #         o = 0
-        #         new_row = []
-        #         for r in row:
-        #             if isinstance(r, str) and re.search('\x00',r):
-        #                 new_row.append(r.replace("\x00", "\uFFFD"))
-        #             else:  
-        #                 new_row.append(r)
-        #             o+=1
-
-        #         # print(new_row)
-        #         self.cursor.execute(insert_stament,new_row)
     
     def commit_all_transactions(self):
         try:

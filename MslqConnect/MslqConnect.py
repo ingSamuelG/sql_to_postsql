@@ -54,6 +54,3 @@ class MslqConnect:
         self.connection.close()
 
 
-    # def get_data_to_import(self,table_name):
-
-
