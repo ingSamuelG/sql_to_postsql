@@ -22,6 +22,31 @@ class PostSqlConnect:
         self.encoding = encoding
         self.cursor.execute("set client_encoding = " + encoding)
     
+    def get_seq_t_name(self):
+        get_seq_psql_stament = "select sequence_name from information_schema.sequences;"
+        get_table_psql_stament = "select table_name from information_schema.tables;"
+        self.cursor.execute(get_seq_psql_stament)
+        seqs = self.cursor.fetchall()
+        self.cursor.execute(get_table_psql_stament)
+        tables = self.cursor.fetchall()
+        results = []
+        for table_name in tables:
+            for seq in seqs:
+                if table_name[0] in seq[0]:
+                    results.append((table_name[0],seq[0]))
+        
+        return results
+
+    def set_val_for_seq(self,seq_name, value):
+        set_val_stament = "SELECT setval('{}', {}, true);"
+        self.cursor.execute(set_val_stament.format(seq_name,value))
+        return self.cursor.fetchone()
+
+    def get_last_record_id(self,table_name):
+        get_last_record = "SELECT id FROM %s ORDER BY id DESC LIMIT 1"%(table_name)
+        self.cursor.execute(get_last_record)
+        return self.cursor.fetchone()
+
     def drop_existing_table(self, table_name):
         drop_stament='drop table if EXISTS %s;'%(table_name)
         self.cursor.execute(drop_stament); 
