@@ -21,6 +21,14 @@ class PostSqlConnect:
         self.cursor = self.connection.cursor()
         self.encoding = encoding
         self.cursor.execute("set client_encoding = " + encoding)
+
+    def get_table_names(self):
+        tables_names = []
+        stament = '''show tables from {}'''.format(self.db_name)
+        self.cursor.execute(stament)
+        results = self.cursor.fetchall()
+        for tables_data in results: tables_names.append(tables_data[0])
+        return tables_names
     
     def get_seq_t_name(self):
         get_seq_psql_stament = "select sequence_name from information_schema.sequences;"
@@ -161,6 +169,3 @@ class PostSqlConnect:
     def close_conections(self):
         self.cursor.close()
         self.connection.close()
-
-
-    
