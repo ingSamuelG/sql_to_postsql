@@ -12,11 +12,11 @@
 
 MYSQL_HOST = "localhost"
 MYSQL_USER = "root"
-MYSQL_DB = "x_development"
+MYSQL_DB = "xfx3"
 MYSQL_PASS = "BLaLue%yi12d"
 
 POSG_HOST = "localhost"
-POSG_DB = "check_x3"
+POSG_DB = "xfx3_p"
 POSG_USER = "postgres"
 POSG_PASS = "PswDevTest22"
 POSG_END = "utf8"
