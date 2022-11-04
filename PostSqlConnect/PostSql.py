@@ -29,6 +29,21 @@ class PostSqlConnect:
         results = self.cursor.fetchall()
         for tables_data in results: tables_names.append(tables_data[0])
         return tables_names
+
+    def smallIntToBoolean(self, table_desc):
+        table = table_desc.get("table")
+        columns = table_desc.get("columns")
+        psqlStament = """ALTER TABLE {}
+                        ALTER {} DROP DEFAULT
+                        ,ALTER {} TYPE boolean USING (CASE WHEN {} = 0 THEN FALSE
+                                                    WHEN {} = 1 THEN TRUE
+                                                    ELSE NULL
+                                                    END)
+                        ,ALTER {} SET NOT NULL
+                        ,ALTER {} SET DEFAULT false;""".format(table, columns, columns,columns,columns,columns, columns,columns)
+        self.cursor.execute(psqlStament)
+        self.connection.commit()
+
     
     def get_seq_t_name(self):
         get_seq_psql_stament = "select sequence_name from information_schema.sequences;"

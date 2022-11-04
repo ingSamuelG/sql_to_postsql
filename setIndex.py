@@ -22,3 +22,6 @@ for table_name, seq_name in seq_tables:
         print(f'setting {seq_name} value to last id count: {id}')
         res_tup = Postql.set_val_for_seq(seq_name,id)
         print("OK")
+
+for table_des in conts.tablesWithBooleans:
+    Postql.smallIntToBoolean(table_des)
