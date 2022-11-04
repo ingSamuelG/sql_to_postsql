@@ -23,5 +23,5 @@ for table_name, seq_name in seq_tables:
         res_tup = Postql.set_val_for_seq(seq_name,id)
         print("OK")
 
-for table_des in conts.tablesWithBooleans:
+for table_des in conts.TWBOOL:
     Postql.smallIntToBoolean(table_des)
