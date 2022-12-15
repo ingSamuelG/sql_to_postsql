@@ -8,16 +8,23 @@ def delete_null_char(value):
     else:  
         return value
 
+keepalive_kwargs = {
+    "keepalives": 1,
+    "keepalives_idle": 120,
+    "keepalives_interval": 10,
+    "keepalives_count": 5
+    }
+
 
 class PostSqlConnect:
-    
+
     def __init__(self, host, user, password, database,encoding) -> None:
         self.host = host
         self.user = user
         self.db_name= database
         self.password = password
         # self.connection = psycopg2.connect(("dbname='{}' user={} password={}").format(database, user, password))
-        self.connection = psycopg2.connect(host= self.host, dbname = self.db_name, user = self.user, password= self.password)
+        self.connection = psycopg2.connect(host= self.host, dbname = self.db_name, user = self.user, password= self.password , **keepalive_kwargs)
         self.cursor = self.connection.cursor()
         self.encoding = encoding
         self.cursor.execute("set client_encoding = " + encoding)
